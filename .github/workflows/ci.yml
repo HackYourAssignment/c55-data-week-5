@@ -1,3 +1,11 @@
+# NOTE on Task 7 (ACR push): you do NOT need to add `azure/login` or `docker
+# push` steps to this file. GitHub blocks repository secrets from running on
+# pull_request workflows that come from a fork, so an `azure/login` step here
+# would fail. A central workflow named "Grade ACR push" on the assignment
+# repo's main branch builds your Dockerfile and pushes it to ACR for you, and
+# comments the image URL on your PR. Your Task 7 deliverable is the
+# `assets/acr_push_week5.png` screenshot (taken from a local `docker push`).
+
 name: CI
 
 on:
@@ -23,13 +31,20 @@ jobs:
         run: API_KEY=test pytest -q
       - name: Build image
         run: docker build -t noneeeed-pipeline:${{ github.sha }} .
+      # The next three steps need the AZURE_CREDENTIALS secret, which GitHub
+      # withholds on pull_request runs from forks for security. The `if:` guard
+      # skips them on fork PRs so CI stays green; the central `Grade ACR push`
+      # workflow on main handles the actual push from base-repo context.
       - name: Azure login
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false
         uses: azure/login@v2
         with:
            creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: ACR login
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false
         run: az acr login --name hyfregistry
       - name: Push image
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false
         run: |
              docker tag noneeeed-pipeline:${{ github.sha }} hyfregistry.azurecr.io/noneeeed-pipeline:${{ github.sha }}
              docker push hyfregistry.azurecr.io/noneeeed-pipeline:${{ github.sha }}
