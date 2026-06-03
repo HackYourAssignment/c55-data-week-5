@@ -14,18 +14,21 @@ from src.pipeline import fetch_data, save_results
 class TestGetConfig:
     def test_returns_api_key_from_env(self, monkeypatch):
         monkeypatch.setenv("API_KEY", "test-key-123")
+        monkeypatch.setenv("GITHUB_USERNAME", "test-user")
         monkeypatch.delenv("OUTPUT_DIR", raising=False)
         config = get_config()
         assert config["api_key"] == "test-key-123"
 
     def test_uses_default_output_dir(self, monkeypatch):
         monkeypatch.setenv("API_KEY", "test-key-123")
+        monkeypatch.setenv("GITHUB_USERNAME", "test-user")
         monkeypatch.delenv("OUTPUT_DIR", raising=False)
         config = get_config()
         assert config["output_dir"] == "output"
 
     def test_reads_custom_output_dir(self, monkeypatch):
         monkeypatch.setenv("API_KEY", "test-key-123")
+        monkeypatch.setenv("GITHUB_USERNAME", "test-user")
         monkeypatch.setenv("OUTPUT_DIR", "/tmp/myout")
         config = get_config()
         assert config["output_dir"] == "/tmp/myout"
