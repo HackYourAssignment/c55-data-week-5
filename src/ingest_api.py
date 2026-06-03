@@ -128,6 +128,3 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
     api_records = fetch_api_records()
-
-    print(f"API records fetched: {len(api_records)}")
-    print(api_records[:3])

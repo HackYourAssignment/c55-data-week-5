@@ -54,6 +54,3 @@ def read_csv_records(path: Path) -> list[dict]:
 if __name__ == "__main__":
     csv_path = Path("data/weather_stations.csv")
     records = read_csv_records(csv_path)
-
-    print(f"CSV records read: {len(records)}")
-    print(records)

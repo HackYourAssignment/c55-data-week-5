@@ -46,7 +46,3 @@ if __name__ == "__main__":
     csv_records = read_csv_records(Path("data/weather_stations.csv"))
 
     valid, errors = validate_records(csv_records, source="csv")
-
-    print(f"Valid records: {len(valid)}")
-    print(f"Invalid records: {len(errors)}")
-    print(errors)

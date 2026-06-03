@@ -5,7 +5,7 @@ Tasks:
 - Task 1: confirm this script runs locally before touching the Dockerfile.
 - Task 5: read all configuration from environment variables (no hardcoded values).
 
-Replace every `raise NotImplementedError` below with a real implementation.
+This file contains the Week 3 pipeline adapted for the Week 5 container assignment.
 """
 
 import json
