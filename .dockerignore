@@ -1,0 +1,58 @@
+# --- Python Bytecode & Caches ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.tox/
+.nox/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.black
+
+# --- Virtual Environments ---
+# (Always let Docker build its own environment via requirements.txt or poetry)
+.venv/
+venv/
+env/
+ENV/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# --- Build & Distribution ---
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# --- Jupyter Notebooks & Lab ---
+.ipynb_checkpoints
+.virtual_documents/
+
+# --- Environment Secrets & Configs ---
+.env
+.env.*
+!.env.example
+*.pod
+*.pem
+*.key
+
+# --- IDEs & OS Junk ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
