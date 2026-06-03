@@ -1,13 +1,8 @@
-# Task 6: Build a CI workflow that runs on pull requests and pushes to main.
-#
-# See the assignment chapter for the required steps and commands.
-# Fill in the TODO values below.
-
 name: CI
 
 on:
   push:
-    branches: ["TODO-replace-with-main"]
+    branches: ["main"]
   pull_request:
 
 jobs:
@@ -21,10 +16,10 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Lint
-        run: echo "TODO implement this step"
+        run: ruff check src tests
       - name: Format
-        run: echo "TODO implement this step"
+        run: ruff format --check src tests
       - name: Test
-        run: echo "TODO implement this step"
+        run: API_KEY=test pytest -q
       - name: Build image
-        run: echo "TODO implement this step"
+        run: docker build -t noneeeed-pipeline:${{ github.sha }} .
