@@ -8,7 +8,7 @@ import pytest
 from src.clean import clean_sales
 from src.pipeline import get_config
 from src.transform import join_customers
-from src.pipeline import fetch_data, get_config, save_results
+from src.pipeline import fetch_data, save_results
 
 
 class TestGetConfig:
