@@ -1,6 +1,7 @@
 """Task 1: Download inputs from Azure. Task 7: Upload outputs back to Azure."""
 
 import logging
+import os
 from pathlib import Path
 from azure.identity import DefaultAzureCredential
 from azure.storage.blob import BlobServiceClient
@@ -15,8 +16,10 @@ FILES = ["messy_sales.csv", "messy_customers.csv"]
 def download_inputs(data_dir: Path) -> None:
     """Task 1: Download input CSV files from Azure Blob Storage."""
     logger.info("Initializing Azure credentials...")
-    credential = DefaultAzureCredential()
-    service = BlobServiceClient(account_url=ACCOUNT_URL, credential=credential)
+    # credential = DefaultAzureCredential()
+    # service = BlobServiceClient(account_url=ACCOUNT_URL, credential=credential)
+    conn = os.environ.get("AZURE_STORAGE_CONNECTION_STRING")
+    service = BlobServiceClient.from_connection_string(conn)
     container = service.get_container_client(SOURCE_CONTAINER)
 
     data_dir.mkdir(parents=True, exist_ok=True)
