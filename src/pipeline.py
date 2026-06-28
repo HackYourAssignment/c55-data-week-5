@@ -16,12 +16,12 @@ logger = logging.getLogger(__name__)
 
 
 def get_config() -> dict:
-    github_username = os.getenv("GITHUB_USERNAME")
-    if not github_username:
-        raise RuntimeError("GITHUB_USERNAME environment variable is required")
+    api_key = os.getenv("API_KEY")
+    if not api_key:
+        raise RuntimeError("API_KEY environment variable is required")
 
     return {
-        "github_username": github_username,
+        "api_key": api_key,
         "data_dir": os.getenv("DATA_DIR", "data"),
         "output_dir": os.getenv("OUTPUT_DIR", "output"),
         "upload_to_azure": os.getenv("UPLOAD_TO_AZURE", "false").lower() == "true",
@@ -34,10 +34,13 @@ def run() -> None:
     data_dir = Path(config["data_dir"])
     output_dir = Path(config["output_dir"])
 
-    logger.info("Starting Week 4 Pandas pipeline")
-
-    download_inputs(data_dir)
-
+    logger.info("Starting Week 5 containerised pipeline")
+    use_azure = os.getenv("USE_AZURE", "false").lower() == "true"
+    if use_azure:
+        download_inputs(data_dir)
+    else:
+        logger.info("Using local data directory: %s", data_dir)
+    
     sales_raw, customers_raw = load_and_explore(data_dir)
     sales_clean = clean_sales(sales_raw)
     enriched = join_customers(sales_clean, customers_raw)
@@ -46,7 +49,7 @@ def run() -> None:
     write_outputs(reports, output_dir)
 
     if config["upload_to_azure"]:
-        upload_outputs(output_dir, config["github_username"])
+        upload_outputs(output_dir, config["api_key"])
 
     logger.info("Pipeline complete")
 
