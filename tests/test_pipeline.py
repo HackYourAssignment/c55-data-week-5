@@ -67,8 +67,8 @@ class TestSaveResults:
         results_file = tmp_path / "results.txt"
         assert results_file.exists()
 
-    def test_file_contains_records(self, tmp_path):
-        """Test that save_results() writes the correct number of records to results.txt."""
+   def test_file_contains_records(self, tmp_path):
+    """Test that save_results() writes the expected record count."""
         save_results([{"id": 1}, {"id": 2}], tmp_path)
         content = (tmp_path / "results.txt").read_text()
         assert len(content.strip().splitlines()) >= 2
