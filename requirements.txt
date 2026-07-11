@@ -11,3 +11,5 @@
 # ruff==
 #
 # Add your pinned dependencies below:
+pytest==7.4.0
+ruff==0.0.241
